@@ -13,14 +13,17 @@ namespace Mh.Aladin
         public int? Start { get; set; }
         public int? MaxResults { get; set; }
 
-        internal ItemListRequest(AladinService service) : base(service)
+        private readonly IService service;
+
+        internal ItemListRequest(IService service)
         {
+            this.service = service;
         }
 
         public override Task<ItemListResponse> SendAsync(CancellationToken cancellationToken = default)
         {
             var sb = new StringBuilder("http://www.aladin.co.kr/ttb/api/itemlist.aspx?");
-            sb.Append("ttbkey=").Append(TTBKey);
+            sb.Append("ttbkey=").Append(service.TTBKey);
             sb.Append("&querytype=").Append(QueryType);
             sb.Append("&output=").Append("js");
             sb.Append("&categoryid=").Append(CategoryId);

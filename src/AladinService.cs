@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mh.Aladin
 {
-    public class AladinService
+    public class AladinService : IService
     {
         private static HttpClient httpClient;
         private static JsonSerializerOptions serializerOptions;
@@ -36,8 +36,8 @@ namespace Mh.Aladin
 
         public ItemListRequest CreateItemListRequest() => new ItemListRequest(this);
 
-        internal async Task<ResT> SendAsync<ResT>(string requestUri, CancellationToken cancellationToken = default)
-            where ResT : ItemResponse
+        public async Task<ResT> SendAsync<ResT>(string requestUri, CancellationToken cancellationToken = default)
+            where ResT : IResponse
         {
             var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
             var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);

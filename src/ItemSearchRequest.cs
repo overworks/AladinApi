@@ -5,7 +5,7 @@ namespace Mh.Aladin
 {
     public class ItemSearchRequest : ItemRequest<ItemSearchResponse>
     {
-        internal ItemSearchRequest(AladinService service) : base(service)
+        internal ItemSearchRequest(AladinService service)
         {
         }
 

@@ -7,12 +7,14 @@ namespace Mh.Aladin
 {
     public class ItemLookUpRequest : ItemRequest<ItemLookUpResponse>
     {
-        internal ItemLookUpRequest(AladinService service) : base(service)
+        internal ItemLookUpRequest(IService service)
         {
+            this.service = service;
         }
 
         public string ItemId { get; set; }
         public ItemIdType? ItemIdType { get; set; }
+
 
         public override async Task<ItemLookUpResponse> SendAsync(CancellationToken cancellationToken = default)
         {
@@ -22,7 +24,7 @@ namespace Mh.Aladin
             }
 
             var sb = new StringBuilder("http://www.aladin.co.kr/ttb/api/itemlookup.aspx?");
-            sb.Append("ttbkey=").Append(TTBKey);
+            sb.Append("ttbkey=").Append(service.TTBKey);
             sb.Append("&version=").Append(Version);
             sb.Append("&output=").Append("js");
             sb.Append("&itemid=").Append(ItemId);
@@ -44,5 +46,7 @@ namespace Mh.Aladin
 
             return await service.SendAsync<ItemLookUpResponse>(sb.ToString(), cancellationToken);
         }
+
+        private readonly IService service;
     }
 }

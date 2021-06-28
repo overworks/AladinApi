@@ -1,6 +1,6 @@
 ﻿namespace Mh.Aladin
 {
-    public abstract class ItemResponse
+    public abstract class ItemResponse : IResponse
     {
         public string Version { get; set; }
         public string Logo { get; set; }
